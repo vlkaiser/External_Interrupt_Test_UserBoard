@@ -4,7 +4,7 @@
  * Created: 1/30/2020 6:13:43 PM
  *  Author: VKaiser
  */ 
- #include "asf.h"
+#include "asf.h"
 #include <Peripherals.h>
 
 /******************************************************************************************************
@@ -70,6 +70,13 @@ void configure_extint_callbacks(void)
 void extint_detection_callback(void)
 {
 	bool button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
+	port_pin_set_output_level(LED_0_PIN, button_pin_state);
+	for (int i = 0; i<5; i++)
+	{
+		port_pin_toggle_output_level(LED_0_PIN);
+		delay_ms(100);
+	}
+	button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
 	port_pin_set_output_level(LED_0_PIN, button_pin_state);
  }
 
