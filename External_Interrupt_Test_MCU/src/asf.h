@@ -78,6 +78,15 @@
 // From module: Part identification macros
 #include <parts.h>
 
+// From module: SERCOM Callback API
+#include <sercom.h>
+#include <sercom_interrupt.h>
+
+// From module: SERCOM I2C - Master Mode I2C (Callback APIs)
+#include <i2c_common.h>
+#include <i2c_master.h>
+#include <i2c_master_interrupt.h>
+
 // From module: SYSTEM - Clock Management for SAMD20
 #include <clock.h>
 #include <gclk.h>

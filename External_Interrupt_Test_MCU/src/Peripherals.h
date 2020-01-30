@@ -12,7 +12,7 @@
 /* Prototypes */
 void sys_config(void);
 
-void config_led(void);
+//void config_led(void);
 
 void configure_extint_channel(void);
 void configure_extint_callbacks(void);
