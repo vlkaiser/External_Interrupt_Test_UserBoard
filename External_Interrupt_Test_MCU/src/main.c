@@ -1,53 +1,70 @@
-/*
- * Basic External Interrupt (SW0) to turn on LED (LED0) 
- * SAMD20J18 USERBOARD new project
- */
+ /******************************************************************************************************
+ * @fn					- 
+ * @brief				- 
+ * @param[in]			- void
+ * @return				- void
+ *
+ * @note				- 
+ ******************************************************************************************************/
+
+/***************************************************************************************************************************
+* Project							: SAMD20 Xplained I2C Master
+* Program Name						:
+* Author							: vkaiser
+* Date Created						: Jan 29 2020
+*
+* Purpose							: Develop I2C on userboard (I2c Callback ASF)
+*
+*
+* MCU								: ATSAMD20J18
+* Language							: C
+* Hardware Modifications			: N/A
+* Debugger							: EDBG (On-board)
+*
+* Repo / Revision History			: https://github.com/vlkaiser/
+*
+* - Special Setup -
+*  Header files for all drivers that have been imported from Atmel Software Framework (ASF).
+*  Use in conjunction with			: SAMD20 Xplained Pro
+*  Wiring Details					: PA08, PA09
+* Revision History					:
+* 	Date				Author			Notes
+* 						vkaiser			- Initial commit
+*
+***************************************************************************************************************************/
 #include <asf.h>
+#include <Peripherals.h>
 
-void configure_extint_channel(void);
-void configure_extint_callbacks(void);
-void extint_detection_callback(void);
+/* GLOBALS */
 
-void configure_extint_channel(void)
-{
-	struct extint_chan_conf config_extint_chan;
-	extint_chan_get_config_defaults(&config_extint_chan);
-	
-	config_extint_chan.gpio_pin = BUTTON_0_EIC_PIN;
-	config_extint_chan.gpio_pin_mux = BUTTON_0_EIC_MUX;
-	config_extint_chan.gpio_pin_pull = EXTINT_PULL_UP;
-	config_extint_chan.detection_criteria = EXTINT_DETECT_BOTH;
-	
-	extint_chan_set_config(BUTTON_0_EIC_LINE, &config_extint_chan);
-}
-void configure_extint_callbacks(void)
-{
-	extint_register_callback(extint_detection_callback, BUTTON_0_EIC_LINE, EXTINT_CALLBACK_TYPE_DETECT);
-	extint_chan_enable_callback(BUTTON_0_EIC_LINE, EXTINT_CALLBACK_TYPE_DETECT);
-}
+/* Prototypes */
 
-void extint_detection_callback(void)
-{
-	bool button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
-	port_pin_set_output_level(LED_0_PIN, button_pin_state);
- }
+
+ /******************************************************************************************************
+ * @fn					- 
+ * @brief				- 
+ * @param[in]			- void
+ * @return				- void
+ *
+ * @note				- 
+ ******************************************************************************************************/
 
+/******************************************************************************************************
+ * @fn					- main
+ * @brief				- 
+ * @param[in]			- void
+ * @return				- void
+ *
+ * @note				- MCU specific definitions in (src->common2->boards) -> user_board.h, init routines in init.c
+ *	                    - Peripheral config in Peripherals.c (src)
+ *						- EXTINT will fire callback asynchronously. (Button0 press -> interrupt callback -> LED0 toggle)
+ ******************************************************************************************************/
 int main (void)
 {
 	system_init();
-	configure_extint_channel();	configure_extint_callbacks();
-	system_interrupt_enable_global();
+	sys_config();
 	while (1)
 	{
-	// EXTINT will fire callback asynchronously.
-	/*
-		if (extint_chan_is_detected(BUTTON_0_EIC_LINE)) {
-			// Do something in response to EXTINT edge detection
-			
-			bool button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
-			port_pin_set_output_level(LED_0_PIN, button_pin_state);
-			extint_chan_clear_detected(BUTTON_0_EIC_LINE);
-		}
-	*/
+
 	}
 }

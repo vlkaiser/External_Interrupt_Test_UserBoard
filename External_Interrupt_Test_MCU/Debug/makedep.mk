@@ -30,5 +30,7 @@ src\ASF\sam0\utils\cmsis\samd20\source\system_samd20.c
 
 src\ASF\sam0\utils\syscalls\gcc\syscalls.c
 
+src\Peripherals.c
+
 src\main.c
 

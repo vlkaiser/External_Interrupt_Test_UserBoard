@@ -3,35 +3,35 @@ External_Interrupt_Test_MCU.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000978  00000000  00000000  00010000  2**2
+  0 .text         00000988  00000000  00000000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .relocate     00000004  20000000  00000978  00020000  2**0
+  1 .relocate     00000004  20000000  00000988  00020000  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          0000007c  20000004  0000097c  00020004  2**2
+  2 .bss          0000007c  20000004  0000098c  00020004  2**2
                   ALLOC
-  3 .stack        00002000  20000080  000009f8  00020004  2**0
+  3 .stack        00002000  20000080  00000a08  00020004  2**0
                   ALLOC
   4 .ARM.attributes 00000028  00000000  00000000  00020004  2**0
                   CONTENTS, READONLY
   5 .comment      00000059  00000000  00000000  0002002c  2**0
                   CONTENTS, READONLY
-  6 .debug_info   00010b1c  00000000  00000000  00020085  2**0
+  6 .debug_info   0001158c  00000000  00000000  00020085  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000022b2  00000000  00000000  00030ba1  2**0
+  7 .debug_abbrev 0000249f  00000000  00000000  00031611  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_loc    0000202c  00000000  00000000  00032e53  2**0
+  8 .debug_loc    0000204c  00000000  00000000  00033ab0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_aranges 000002b8  00000000  00000000  00034e7f  2**0
+  9 .debug_aranges 000002e0  00000000  00000000  00035afc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000290  00000000  00000000  00035137  2**0
+ 10 .debug_ranges 000002a8  00000000  00000000  00035ddc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_macro  00003b9f  00000000  00000000  000353c7  2**0
+ 11 .debug_macro  00004126  00000000  00000000  00036084  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   00006d03  00000000  00000000  00038f66  2**0
+ 12 .debug_line   0000789d  00000000  00000000  0003a1aa  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    0005e1a3  00000000  00000000  0003fc69  2**0
+ 13 .debug_str    0005e1d3  00000000  00000000  00041a47  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_frame  000005c8  00000000  00000000  0009de0c  2**2
+ 14 .debug_frame  00000600  00000000  00000000  0009fc1c  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -40,7 +40,7 @@ Disassembly of section .text:
    0:	80 20 00 20 b9 07 00 00 b5 07 00 00 b5 07 00 00     . . ............
 	...
   2c:	b5 07 00 00 00 00 00 00 00 00 00 00 b5 07 00 00     ................
-  3c:	b5 07 00 00 b5 07 00 00 b5 07 00 00 b5 07 00 00     ................
+  3c:	71 08 00 00 b5 07 00 00 b5 07 00 00 b5 07 00 00     q...............
   4c:	b5 07 00 00 85 02 00 00 b5 07 00 00 b5 07 00 00     ................
   5c:	b5 07 00 00 b5 07 00 00 b5 07 00 00 b5 07 00 00     ................
   6c:	b5 07 00 00 b5 07 00 00 b5 07 00 00 b5 07 00 00     ................
@@ -65,7 +65,7 @@ Disassembly of section .text:
   be:	bd10      	pop	{r4, pc}
   c0:	20000004 	.word	0x20000004
   c4:	00000000 	.word	0x00000000
-  c8:	00000978 	.word	0x00000978
+  c8:	00000988 	.word	0x00000988
 
 000000cc <frame_dummy>:
   cc:	4b08      	ldr	r3, [pc, #32]	; (f0 <frame_dummy+0x24>)
@@ -88,8 +88,8 @@ Disassembly of section .text:
   ee:	e7f9      	b.n	e4 <frame_dummy+0x18>
   f0:	00000000 	.word	0x00000000
   f4:	20000008 	.word	0x20000008
-  f8:	00000978 	.word	0x00000978
-  fc:	00000978 	.word	0x00000978
+  f8:	00000988 	.word	0x00000988
+  fc:	00000988 	.word	0x00000988
  100:	00000000 	.word	0x00000000
 
 00000104 <_extint_enable>:
@@ -836,7 +836,7 @@ enum status_code system_clock_source_enable(
  438:	2000      	movs	r0, #0
 }
  43a:	4770      	bx	lr
- 43c:	00000938 	.word	0x00000938
+ 43c:	00000948 	.word	0x00000948
  440:	40000800 	.word	0x40000800
  444:	20000028 	.word	0x20000028
  448:	0000ff7f 	.word	0x0000ff7f
@@ -1712,7 +1712,7 @@ void Dummy_Handler(void)
  81e:	4798      	blx	r3
  820:	e7fe      	b.n	820 <Reset_Handler+0x68>
  822:	46c0      	nop			; (mov r8, r8)
- 824:	00000978 	.word	0x00000978
+ 824:	00000988 	.word	0x00000988
  828:	20000000 	.word	0x20000000
  82c:	20000004 	.word	0x20000004
  830:	20000004 	.word	0x20000004
@@ -1721,8 +1721,8 @@ void Dummy_Handler(void)
  83c:	e000ed00 	.word	0xe000ed00
  840:	00000000 	.word	0x00000000
  844:	41004000 	.word	0x41004000
- 848:	000008f1 	.word	0x000008f1
- 84c:	000008c5 	.word	0x000008c5
+ 848:	00000901 	.word	0x00000901
+ 84c:	000008ed 	.word	0x000008ed
 
 00000850 <extint_detection_callback>:
 	return (port_base->IN.reg & pin_mask);
@@ -1737,7 +1737,7 @@ void Dummy_Handler(void)
  85a:	01d2      	lsls	r2, r2, #7
  85c:	4b03      	ldr	r3, [pc, #12]	; (86c <extint_detection_callback+0x1c>)
  85e:	615a      	str	r2, [r3, #20]
-
+ ******************************************************************************************************/
 void extint_detection_callback(void)
 {
 	bool button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
@@ -1752,139 +1752,147 @@ void extint_detection_callback(void)
  86a:	e7f9      	b.n	860 <extint_detection_callback+0x10>
  86c:	41004400 	.word	0x41004400
 
-00000870 <configure_extint_channel>:
+00000870 <SysTick_Handler>:
+ }
+ 870:	4770      	bx	lr
+	...
+
+00000874 <configure_extint_channel>:
 {
- 870:	b510      	push	{r4, lr}
- 872:	b084      	sub	sp, #16
+ 874:	b510      	push	{r4, lr}
+ 876:	b084      	sub	sp, #16
 	extint_chan_get_config_defaults(&config_extint_chan);
- 874:	ac01      	add	r4, sp, #4
- 876:	0020      	movs	r0, r4
- 878:	4b07      	ldr	r3, [pc, #28]	; (898 <configure_extint_channel+0x28>)
- 87a:	4798      	blx	r3
+ 878:	ac01      	add	r4, sp, #4
+ 87a:	0020      	movs	r0, r4
+ 87c:	4b07      	ldr	r3, [pc, #28]	; (89c <configure_extint_channel+0x28>)
+ 87e:	4798      	blx	r3
 	config_extint_chan.gpio_pin = BUTTON_0_EIC_PIN;
- 87c:	230f      	movs	r3, #15
- 87e:	9301      	str	r3, [sp, #4]
+ 880:	230f      	movs	r3, #15
+ 882:	9301      	str	r3, [sp, #4]
 	config_extint_chan.gpio_pin_mux = BUTTON_0_EIC_MUX;
- 880:	2300      	movs	r3, #0
- 882:	6063      	str	r3, [r4, #4]
+ 884:	2300      	movs	r3, #0
+ 886:	6063      	str	r3, [r4, #4]
 	config_extint_chan.gpio_pin_pull = EXTINT_PULL_UP;
- 884:	3301      	adds	r3, #1
- 886:	7223      	strb	r3, [r4, #8]
+ 888:	3301      	adds	r3, #1
+ 88a:	7223      	strb	r3, [r4, #8]
 	config_extint_chan.detection_criteria = EXTINT_DETECT_BOTH;
- 888:	3302      	adds	r3, #2
- 88a:	72e3      	strb	r3, [r4, #11]
+ 88c:	3302      	adds	r3, #2
+ 88e:	72e3      	strb	r3, [r4, #11]
 	extint_chan_set_config(BUTTON_0_EIC_LINE, &config_extint_chan);
- 88c:	0021      	movs	r1, r4
- 88e:	200f      	movs	r0, #15
- 890:	4b02      	ldr	r3, [pc, #8]	; (89c <configure_extint_channel+0x2c>)
- 892:	4798      	blx	r3
+ 890:	0021      	movs	r1, r4
+ 892:	200f      	movs	r0, #15
+ 894:	4b02      	ldr	r3, [pc, #8]	; (8a0 <configure_extint_channel+0x2c>)
+ 896:	4798      	blx	r3
 }
- 894:	b004      	add	sp, #16
- 896:	bd10      	pop	{r4, pc}
- 898:	00000189 	.word	0x00000189
- 89c:	0000019d 	.word	0x0000019d
+ 898:	b004      	add	sp, #16
+ 89a:	bd10      	pop	{r4, pc}
+ 89c:	00000189 	.word	0x00000189
+ 8a0:	0000019d 	.word	0x0000019d
 
-000008a0 <configure_extint_callbacks>:
+000008a4 <configure_extint_callbacks>:
 {
- 8a0:	b510      	push	{r4, lr}
+ 8a4:	b510      	push	{r4, lr}
 	extint_register_callback(extint_detection_callback, BUTTON_0_EIC_LINE, EXTINT_CALLBACK_TYPE_DETECT);
- 8a2:	2200      	movs	r2, #0
- 8a4:	210f      	movs	r1, #15
- 8a6:	4804      	ldr	r0, [pc, #16]	; (8b8 <configure_extint_callbacks+0x18>)
- 8a8:	4b04      	ldr	r3, [pc, #16]	; (8bc <configure_extint_callbacks+0x1c>)
- 8aa:	4798      	blx	r3
+ 8a6:	2200      	movs	r2, #0
+ 8a8:	210f      	movs	r1, #15
+ 8aa:	4804      	ldr	r0, [pc, #16]	; (8bc <configure_extint_callbacks+0x18>)
+ 8ac:	4b04      	ldr	r3, [pc, #16]	; (8c0 <configure_extint_callbacks+0x1c>)
+ 8ae:	4798      	blx	r3
 	extint_chan_enable_callback(BUTTON_0_EIC_LINE, EXTINT_CALLBACK_TYPE_DETECT);
- 8ac:	2100      	movs	r1, #0
- 8ae:	200f      	movs	r0, #15
- 8b0:	4b03      	ldr	r3, [pc, #12]	; (8c0 <configure_extint_callbacks+0x20>)
- 8b2:	4798      	blx	r3
+ 8b0:	2100      	movs	r1, #0
+ 8b2:	200f      	movs	r0, #15
+ 8b4:	4b03      	ldr	r3, [pc, #12]	; (8c4 <configure_extint_callbacks+0x20>)
+ 8b6:	4798      	blx	r3
 }
- 8b4:	bd10      	pop	{r4, pc}
- 8b6:	46c0      	nop			; (mov r8, r8)
- 8b8:	00000851 	.word	0x00000851
- 8bc:	00000239 	.word	0x00000239
- 8c0:	00000265 	.word	0x00000265
+ 8b8:	bd10      	pop	{r4, pc}
+ 8ba:	46c0      	nop			; (mov r8, r8)
+ 8bc:	00000851 	.word	0x00000851
+ 8c0:	00000239 	.word	0x00000239
+ 8c4:	00000265 	.word	0x00000265
 
-000008c4 <main>:
+000008c8 <sys_config>:
 
-
-int main (void)
+void sys_config(void)
 {
- 8c4:	b510      	push	{r4, lr}
-	system_init();
- 8c6:	4b06      	ldr	r3, [pc, #24]	; (8e0 <main+0x1c>)
- 8c8:	4798      	blx	r3
-	configure_extint_channel();
- 8ca:	4b06      	ldr	r3, [pc, #24]	; (8e4 <main+0x20>)
+ 8c8:	b510      	push	{r4, lr}
+ 	configure_extint_channel();
+ 8ca:	4b05      	ldr	r3, [pc, #20]	; (8e0 <sys_config+0x18>)
  8cc:	4798      	blx	r3
-	configure_extint_callbacks();
- 8ce:	4b06      	ldr	r3, [pc, #24]	; (8e8 <main+0x24>)
+ 	configure_extint_callbacks();
+ 8ce:	4b05      	ldr	r3, [pc, #20]	; (8e4 <sys_config+0x1c>)
  8d0:	4798      	blx	r3
 	cpu_irq_enable();
  8d2:	2201      	movs	r2, #1
- 8d4:	4b05      	ldr	r3, [pc, #20]	; (8ec <main+0x28>)
+ 8d4:	4b04      	ldr	r3, [pc, #16]	; (8e8 <sys_config+0x20>)
  8d6:	701a      	strb	r2, [r3, #0]
  8d8:	f3bf 8f5f 	dmb	sy
  8dc:	b662      	cpsie	i
- 8de:	e7fe      	b.n	8de <main+0x1a>
- 8e0:	00000789 	.word	0x00000789
- 8e4:	00000871 	.word	0x00000871
- 8e8:	000008a1 	.word	0x000008a1
- 8ec:	20000000 	.word	0x20000000
+ 	system_interrupt_enable_global();
+ 8de:	bd10      	pop	{r4, pc}
+ 8e0:	00000875 	.word	0x00000875
+ 8e4:	000008a5 	.word	0x000008a5
+ 8e8:	20000000 	.word	0x20000000
 
-000008f0 <__libc_init_array>:
- 8f0:	b570      	push	{r4, r5, r6, lr}
- 8f2:	2600      	movs	r6, #0
- 8f4:	4d0c      	ldr	r5, [pc, #48]	; (928 <__libc_init_array+0x38>)
- 8f6:	4c0d      	ldr	r4, [pc, #52]	; (92c <__libc_init_array+0x3c>)
- 8f8:	1b64      	subs	r4, r4, r5
- 8fa:	10a4      	asrs	r4, r4, #2
- 8fc:	42a6      	cmp	r6, r4
- 8fe:	d109      	bne.n	914 <__libc_init_array+0x24>
- 900:	2600      	movs	r6, #0
- 902:	f000 f829 	bl	958 <_init>
- 906:	4d0a      	ldr	r5, [pc, #40]	; (930 <__libc_init_array+0x40>)
- 908:	4c0a      	ldr	r4, [pc, #40]	; (934 <__libc_init_array+0x44>)
- 90a:	1b64      	subs	r4, r4, r5
- 90c:	10a4      	asrs	r4, r4, #2
- 90e:	42a6      	cmp	r6, r4
- 910:	d105      	bne.n	91e <__libc_init_array+0x2e>
- 912:	bd70      	pop	{r4, r5, r6, pc}
- 914:	00b3      	lsls	r3, r6, #2
- 916:	58eb      	ldr	r3, [r5, r3]
- 918:	4798      	blx	r3
- 91a:	3601      	adds	r6, #1
- 91c:	e7ee      	b.n	8fc <__libc_init_array+0xc>
- 91e:	00b3      	lsls	r3, r6, #2
- 920:	58eb      	ldr	r3, [r5, r3]
- 922:	4798      	blx	r3
- 924:	3601      	adds	r6, #1
- 926:	e7f2      	b.n	90e <__libc_init_array+0x1e>
- 928:	00000964 	.word	0x00000964
- 92c:	00000964 	.word	0x00000964
- 930:	00000964 	.word	0x00000964
- 934:	00000968 	.word	0x00000968
- 938:	000003e8 	.word	0x000003e8
- 93c:	000003c8 	.word	0x000003c8
- 940:	000003c8 	.word	0x000003c8
- 944:	00000438 	.word	0x00000438
- 948:	000003da 	.word	0x000003da
- 94c:	000003f6 	.word	0x000003f6
- 950:	000003cc 	.word	0x000003cc
- 954:	00000404 	.word	0x00000404
+000008ec <main>:
+ * @note				- MCU specific definitions in (src->common2->boards) -> user_board.h, init routines in init.c
+ *	                    - Peripheral config in Peripherals.c (src)
+ *						- EXTINT will fire callback asynchronously. (Button0 press -> interrupt callback -> LED0 toggle)
+ ******************************************************************************************************/
+int main (void)
+{
+ 8ec:	b510      	push	{r4, lr}
+	system_init();
+ 8ee:	4b02      	ldr	r3, [pc, #8]	; (8f8 <main+0xc>)
+ 8f0:	4798      	blx	r3
+	sys_config();
+ 8f2:	4b02      	ldr	r3, [pc, #8]	; (8fc <main+0x10>)
+ 8f4:	4798      	blx	r3
+ 8f6:	e7fe      	b.n	8f6 <main+0xa>
+ 8f8:	00000789 	.word	0x00000789
+ 8fc:	000008c9 	.word	0x000008c9
 
-00000958 <_init>:
- 958:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 95a:	46c0      	nop			; (mov r8, r8)
- 95c:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 95e:	bc08      	pop	{r3}
- 960:	469e      	mov	lr, r3
- 962:	4770      	bx	lr
+00000900 <__libc_init_array>:
+ 900:	b570      	push	{r4, r5, r6, lr}
+ 902:	2600      	movs	r6, #0
+ 904:	4d0c      	ldr	r5, [pc, #48]	; (938 <__libc_init_array+0x38>)
+ 906:	4c0d      	ldr	r4, [pc, #52]	; (93c <__libc_init_array+0x3c>)
+ 908:	1b64      	subs	r4, r4, r5
+ 90a:	10a4      	asrs	r4, r4, #2
+ 90c:	42a6      	cmp	r6, r4
+ 90e:	d109      	bne.n	924 <__libc_init_array+0x24>
+ 910:	2600      	movs	r6, #0
+ 912:	f000 f829 	bl	968 <_init>
+ 916:	4d0a      	ldr	r5, [pc, #40]	; (940 <__libc_init_array+0x40>)
+ 918:	4c0a      	ldr	r4, [pc, #40]	; (944 <__libc_init_array+0x44>)
+ 91a:	1b64      	subs	r4, r4, r5
+ 91c:	10a4      	asrs	r4, r4, #2
+ 91e:	42a6      	cmp	r6, r4
+ 920:	d105      	bne.n	92e <__libc_init_array+0x2e>
+ 922:	bd70      	pop	{r4, r5, r6, pc}
+ 924:	00b3      	lsls	r3, r6, #2
+ 926:	58eb      	ldr	r3, [r5, r3]
+ 928:	4798      	blx	r3
+ 92a:	3601      	adds	r6, #1
+ 92c:	e7ee      	b.n	90c <__libc_init_array+0xc>
+ 92e:	00b3      	lsls	r3, r6, #2
+ 930:	58eb      	ldr	r3, [r5, r3]
+ 932:	4798      	blx	r3
+ 934:	3601      	adds	r6, #1
+ 936:	e7f2      	b.n	91e <__libc_init_array+0x1e>
+ 938:	00000974 	.word	0x00000974
+ 93c:	00000974 	.word	0x00000974
+ 940:	00000974 	.word	0x00000974
+ 944:	00000978 	.word	0x00000978
+ 948:	000003e8 	.word	0x000003e8
+ 94c:	000003c8 	.word	0x000003c8
+ 950:	000003c8 	.word	0x000003c8
+ 954:	00000438 	.word	0x00000438
+ 958:	000003da 	.word	0x000003da
+ 95c:	000003f6 	.word	0x000003f6
+ 960:	000003cc 	.word	0x000003cc
+ 964:	00000404 	.word	0x00000404
 
-00000964 <__init_array_start>:
- 964:	000000cd 	.word	0x000000cd
-
-00000968 <_fini>:
+00000968 <_init>:
  968:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
  96a:	46c0      	nop			; (mov r8, r8)
  96c:	bcf8      	pop	{r3, r4, r5, r6, r7}
@@ -1892,5 +1900,16 @@ int main (void)
  970:	469e      	mov	lr, r3
  972:	4770      	bx	lr
 
-00000974 <__fini_array_start>:
- 974:	000000a5 	.word	0x000000a5
+00000974 <__init_array_start>:
+ 974:	000000cd 	.word	0x000000cd
+
+00000978 <_fini>:
+ 978:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 97a:	46c0      	nop			; (mov r8, r8)
+ 97c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 97e:	bc08      	pop	{r3}
+ 980:	469e      	mov	lr, r3
+ 982:	4770      	bx	lr
+
+00000984 <__fini_array_start>:
+ 984:	000000a5 	.word	0x000000a5
