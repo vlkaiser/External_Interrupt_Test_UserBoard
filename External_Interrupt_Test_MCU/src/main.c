@@ -23,7 +23,8 @@
 *
 * Repo / Revision History			: https://github.com/vlkaiser/
 *
-* - Special Setup -
+* - Special Setup -					: +2kohm pullups on SDA and SCL (on XPLAINED boards)
+
 *  Header files for all drivers that have been imported from Atmel Software Framework (ASF).
 *  Use in conjunction with			: SAMD20 Xplained Pro
 *  Wiring Details					: PA08, PA09
@@ -80,11 +81,12 @@ int main (void)
 	system_init();
 	sys_config();	while (1)
 	{
+	/*
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);
 		delay_ms(100);
 		sensorRead(rd_buffer);
 		delay_ms(100);
-
+	*/
 		//i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);				//i2c_read_request_callback
 		//delay_ms(100);
 

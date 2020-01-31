@@ -78,7 +78,7 @@ void extint_detection_callback(void)
 	port_pin_set_output_level(LED_0_PIN, button_pin_state);
 	
 	i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));	//i2c_read_request_callback
-	delay_ms(100);
+	//delay_ms(100);
 	i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
 			
  }
