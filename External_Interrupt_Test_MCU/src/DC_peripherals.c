@@ -5,7 +5,7 @@
  *  Author: VKaiser
  */ 
 #include "asf.h"
-#include <Peripherals.h>
+#include <DC_peripherals.h>
 
 
 /******************************************************************************************************
@@ -76,6 +76,9 @@ void SysTick_Handler(void)
 	// Your code goes here
 }
 
+
+
+
  /******************************************************************************************************
  * @fn					- sys_config
  * @brief				- Calls all the config functions (called from main.c)
@@ -89,4 +92,6 @@ void sys_config(void)
 
  	configure_extint_channel(); 	configure_extint_callbacks();
  	system_interrupt_enable_global();
+
+	configure_i2c_master();
 }

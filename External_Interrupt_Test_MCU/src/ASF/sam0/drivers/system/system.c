@@ -87,7 +87,6 @@ void system_init(void)
 	system_clock_init();
 
 	/* Initialize board hardware */
-
 	system_board_init();
 
 	/* Initialize EVSYS hardware */

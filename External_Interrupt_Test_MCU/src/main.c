@@ -33,21 +33,37 @@
 *
 ***************************************************************************************************************************/
 #include <asf.h>
-#include <Peripherals.h>
+#include <main.h>
 
 /* GLOBALS */
 
 /* Prototypes */
 
+/******* TEMPERATURE SENSOR TEST ********/
+	uint8_t sensorADDR = 0x18;
+	uint8_t cfgReg = 0x01;
+	uint8_t	wr_buffer[1] = {0xE0};
+	uint8_t rd_buffer[2] = {0xAA};
+	
+/***************************************/
 
  /******************************************************************************************************
- * @fn					- 
+ * @fn					- sensorRead
  * @brief				- 
- * @param[in]			- void
+ * @param[in]			- uint8_t* rd_buf
  * @return				- void
  *
  * @note				- 
  ******************************************************************************************************/
+ void sensorRead(uint8_t* rd_buf)
+ {
+	 uint8_t sensorADDR = 0x18;
+	 uint8_t mfgIDReg = 0x06;
+
+	 i2c_Read(sensorADDR, mfgIDReg, rd_buf, 2);	//expected 0x0054
+
+ }
+
 
 /******************************************************************************************************
  * @fn					- main
@@ -63,8 +79,14 @@ int main (void)
 {
 	system_init();
 	sys_config();
+
 	while (1)
 	{
+	
+		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);
+		delay_ms(100);
+		sensorRead(rd_buffer);
+		delay_ms(100);
 
 	}
 }
