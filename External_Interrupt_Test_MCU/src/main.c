@@ -101,28 +101,27 @@
 int main (void)
 {
 	system_init();
-	sys_config();	struct write_cmds wr_cmds;
+	sys_config();	struct write_cmds wr_cmds;
 	wr_cmds.cmd1 = 0xA5;
 	wr_cmds.cmd2 = 0xB5;
 	wr_cmds.cmd3 = 0xC5;
 	wr_cmds.cmd4 = 0xD5;
 	wr_cmds.cmd5 = 0xE5;
 
-
 	while (1)
 	{
-	
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);
 		delay_ms(100);
 		sensorRead(rd_buffer);
 		delay_ms(100);
 
-		i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));			//i2c_read_request_callback
+		i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));	//i2c_read_request_callback
 		delay_ms(100);
-		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);			//i2c_read_request_callback
+
+		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);				//i2c_read_request_callback
 		delay_ms(100);
-		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
-		
+
+		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback		
 		delay_ms(100);
 	
 	}

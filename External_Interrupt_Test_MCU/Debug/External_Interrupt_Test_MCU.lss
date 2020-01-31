@@ -4519,6 +4519,7 @@ int main (void)
 	sys_config();
     16c4:	4b1c      	ldr	r3, [pc, #112]	; (1738 <main+0x80>)
     16c6:	4798      	blx	r3
+
 	struct write_cmds wr_cmds;
 	wr_cmds.cmd1 = 0xA5;
     16c8:	23a5      	movs	r3, #165	; 0xa5
@@ -4537,10 +4538,8 @@ int main (void)
     16da:	3310      	adds	r3, #16
     16dc:	7113      	strb	r3, [r2, #4]
 
-
 	while (1)
 	{
-	
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);
     16de:	4b17      	ldr	r3, [pc, #92]	; (173c <main+0x84>)
     16e0:	4699      	mov	r9, r3
@@ -4564,7 +4563,7 @@ int main (void)
     16fe:	2064      	movs	r0, #100	; 0x64
     1700:	47a0      	blx	r4
 
-		i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));			//i2c_read_request_callback
+		i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));	//i2c_read_request_callback
     1702:	4d15      	ldr	r5, [pc, #84]	; (1758 <main+0xa0>)
     1704:	7828      	ldrb	r0, [r5, #0]
     1706:	2205      	movs	r2, #5
@@ -4574,7 +4573,8 @@ int main (void)
 		delay_ms(100);
     170e:	2064      	movs	r0, #100	; 0x64
     1710:	47a0      	blx	r4
-		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);			//i2c_read_request_callback
+
+		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);				//i2c_read_request_callback
     1712:	7828      	ldrb	r0, [r5, #0]
     1714:	2205      	movs	r2, #5
     1716:	4912      	ldr	r1, [pc, #72]	; (1760 <main+0xa8>)
@@ -4582,7 +4582,8 @@ int main (void)
 		delay_ms(100);
     171a:	2064      	movs	r0, #100	; 0x64
     171c:	47a0      	blx	r4
-		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
+
+		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback		
     171e:	4b11      	ldr	r3, [pc, #68]	; (1764 <main+0xac>)
     1720:	7819      	ldrb	r1, [r3, #0]
     1722:	7828      	ldrb	r0, [r5, #0]
@@ -4590,7 +4591,6 @@ int main (void)
     1726:	4a10      	ldr	r2, [pc, #64]	; (1768 <main+0xb0>)
     1728:	4d10      	ldr	r5, [pc, #64]	; (176c <main+0xb4>)
     172a:	47a8      	blx	r5
-		
 		delay_ms(100);
     172c:	2064      	movs	r0, #100	; 0x64
     172e:	47a0      	blx	r4
