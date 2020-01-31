@@ -59,6 +59,15 @@
 	uint8_t	slwr_buffer[DATA_LENGTH] = {0x5A, 0x5B, 0x5C, 0x5D, 0x5E };
 	uint8_t slrd_buffer[DATA_LENGTH];
 	
+	struct write_cmds 
+	{
+		uint8_t cmd1;
+		uint8_t cmd2;
+		uint8_t cmd3;
+		uint8_t cmd4;
+		uint8_t cmd5;
+	};
+
 /***************************************/
 
  /******************************************************************************************************
@@ -92,7 +101,13 @@
 int main (void)
 {
 	system_init();
-	sys_config();
+	sys_config();	struct write_cmds wr_cmds;
+	wr_cmds.cmd1 = 0xA5;
+	wr_cmds.cmd2 = 0xB5;
+	wr_cmds.cmd3 = 0xC5;
+	wr_cmds.cmd4 = 0xD5;
+	wr_cmds.cmd5 = 0xE5;
+
 
 	while (1)
 	{
@@ -102,12 +117,11 @@ int main (void)
 		sensorRead(rd_buffer);
 		delay_ms(100);
 
+		i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));			//i2c_read_request_callback
+		delay_ms(100);
 		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);			//i2c_read_request_callback
-		//Missing ACK on WRITE
-		
 		delay_ms(100);
 		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
-		//SUCCESSFUL READ
 		
 		delay_ms(100);
 	
