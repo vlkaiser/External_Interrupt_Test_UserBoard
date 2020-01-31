@@ -90,7 +90,5 @@ int main (void)
 		//i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);				//i2c_read_request_callback
 		//delay_ms(100);
 
-
-	
 	}
 }
