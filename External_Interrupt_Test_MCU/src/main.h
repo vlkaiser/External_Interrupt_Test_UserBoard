@@ -17,6 +17,7 @@
 #include "stdio.h"
 #include "string.h"
 
+void sensorRead(uint8_t* rd_buf);
 
 
 #endif /* MAIN_H_ */

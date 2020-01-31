@@ -4,9 +4,31 @@
  * Created: 1/30/2020 6:13:43 PM
  *  Author: VKaiser
  */ 
-#include "asf.h"
 #include <DC_peripherals.h>
 
+/*********** SLAVE MCU TEST ************/
+	uint8_t slaveADDR = 0x1A;
+	uint8_t slcfgReg = 0x0;
+	/*
+	#define DATA_LENGTH 10
+	uint8_t	slwr_buffer[DATA_LENGTH] = {0x5A, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0xBA, 0xBB, 0xBC, 0xBD };
+	*/
+	#define DATA_LENGTH	5	
+	uint8_t	slwr_buffer[DATA_LENGTH] = {0x5A, 0x5B, 0x5C, 0x5D, 0x5E };
+	uint8_t slrd_buffer[DATA_LENGTH];
+	
+	struct write_cmds 
+	{
+		uint8_t cmd1;
+		uint8_t cmd2;
+		uint8_t cmd3;
+		uint8_t cmd4;
+		uint8_t cmd5;
+	};
+
+	struct write_cmds wr_cmds;
+	
+/***************************************/
 
 /******************************************************************************************************
  * @fn					- configure_extint_channel
@@ -54,13 +76,11 @@ void extint_detection_callback(void)
 {
 	bool button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
 	port_pin_set_output_level(LED_0_PIN, button_pin_state);
-	for (int i = 0; i<5; i++)
-	{
-		port_pin_toggle_output_level(LED_0_PIN);
-		delay_ms(100);
-	}
-	button_pin_state = port_pin_get_input_level(BUTTON_0_PIN);
-	port_pin_set_output_level(LED_0_PIN, button_pin_state);
+	
+	i2c_slWrite(slaveADDR, (uint8_t *)&wr_cmds, sizeof(wr_cmds));	//i2c_read_request_callback
+	delay_ms(100);
+	i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
+			
  }
 
   /******************************************************************************************************
@@ -75,8 +95,6 @@ void SysTick_Handler(void)
 {
 	// Your code goes here
 }
-
-
 
 
  /******************************************************************************************************
@@ -94,4 +112,10 @@ void sys_config(void)
  	system_interrupt_enable_global();
 
 	configure_i2c_master();
+
+		wr_cmds.cmd1 = 0xA5;
+		wr_cmds.cmd2 = 0xB5;
+		wr_cmds.cmd3 = 0xC5;
+		wr_cmds.cmd4 = 0xD5;
+		wr_cmds.cmd5 = 0xE5;
 }

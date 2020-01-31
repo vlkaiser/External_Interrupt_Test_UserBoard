@@ -1,5 +1,6 @@
 src/DC_peripherals.d src/DC_peripherals.o: ../src/DC_peripherals.c \
- ../src/asf.h ../src/ASF/sam0/utils/compiler.h \
+ ../src/DC_peripherals.h ../src/main.h ../src/asf.h \
+ ../src/ASF/sam0/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h ../src/ASF/sam0/utils/status_codes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
@@ -122,12 +123,15 @@ src/DC_peripherals.d src/DC_peripherals.o: ../src/DC_peripherals.c \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_common.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master_interrupt.h \
- ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h ../src/DC_peripherals.h \
- ../src/main.h ../src/asf.h ../src/DC_TypeDefs.h ../src/DC_peripherals.h \
- ../src/DC_sercom.h \
+ ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h ../src/DC_TypeDefs.h \
+ ../src/DC_peripherals.h ../src/DC_sercom.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
+
+../src/DC_peripherals.h:
+
+../src/main.h:
 
 ../src/asf.h:
 
@@ -384,12 +388,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam0/drivers/sercom/i2c/i2c_master_interrupt.h:
 
 ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h:
-
-../src/DC_peripherals.h:
-
-../src/main.h:
-
-../src/asf.h:
 
 ../src/DC_TypeDefs.h:
 
