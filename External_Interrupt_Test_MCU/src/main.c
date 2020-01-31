@@ -44,6 +44,20 @@
 	uint8_t cfgReg = 0x01;
 	uint8_t	wr_buffer[1] = {0xE0};
 	uint8_t rd_buffer[2] = {0xAA};
+
+	 void sensorRead(uint8_t* rd_buf);
+/***************************************/
+
+/*********** SLAVE MCU TEST ************/
+	uint8_t slaveADDR = 0x1A;
+	uint8_t slcfgReg = 0x0;
+	/*
+	#define DATA_LENGTH 10
+	uint8_t	slwr_buffer[DATA_LENGTH] = {0x5A, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0xBA, 0xBB, 0xBC, 0xBD };
+	*/
+	#define DATA_LENGTH	5	
+	uint8_t	slwr_buffer[DATA_LENGTH] = {0x5A, 0x5B, 0x5C, 0x5D, 0x5E };
+	uint8_t slrd_buffer[DATA_LENGTH];
 	
 /***************************************/
 
@@ -57,7 +71,7 @@
  ******************************************************************************************************/
  void sensorRead(uint8_t* rd_buf)
  {
-	 uint8_t sensorADDR = 0x18;
+	 //uint8_t sensorADDR = 0x18;
 	 uint8_t mfgIDReg = 0x06;
 
 	 i2c_Read(sensorADDR, mfgIDReg, rd_buf, 2);	//expected 0x0054
@@ -88,5 +102,14 @@ int main (void)
 		sensorRead(rd_buffer);
 		delay_ms(100);
 
+		i2c_slWrite(slaveADDR, slwr_buffer, DATA_LENGTH);			//i2c_read_request_callback
+		//Missing ACK on WRITE
+		
+		delay_ms(100);
+		i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
+		//SUCCESSFUL READ
+		
+		delay_ms(100);
+	
 	}
 }
