@@ -13,6 +13,7 @@
  /* Timeout counter. */
  uint16_t timeout = 0;
 
+
   /**********************************************************************
  * @fn					- configure_i2c_master
  * @brief				- Set up the I2C Master Module
@@ -43,18 +44,18 @@
 
   /**********************************************************************
  * @fn					- i2c_write_complete_callback
- * @brief				- Read write to slave until success, overrides weak definition
+ * @brief				- write to slave until success, overrides weak definition
  *
  * @param[in]			- struct i2c_master_module
  * @param[in]			-  *const module					
  * @return				- void
  *
- * @note				- called from main
+ * @note				- 
  **********************************************************************/ 
  void i2c_write_complete_callback(struct i2c_master_module *const module)
 {
 	/* Initiate new packet read */
-	i2c_master_read_packet_job(&i2c_master_instance,&read_packet);
+	i2c_master_read_packet_job(&i2c_master_instance, &read_packet);
 
 } // i2c_write_complete_callback
 
@@ -72,12 +73,13 @@
 {
 	/* Register callback function. */
 
-	i2c_master_register_callback(&i2c_master_instance, i2c_write_complete_callback, 
-			I2C_MASTER_CALLBACK_WRITE_COMPLETE);
+	i2c_master_register_callback(&i2c_master_instance, i2c_write_complete_callback, I2C_MASTER_CALLBACK_WRITE_COMPLETE);
+	i2c_master_enable_callback(&i2c_master_instance, I2C_MASTER_CALLBACK_WRITE_COMPLETE);
 
-	i2c_master_enable_callback(&i2c_master_instance,
-			I2C_MASTER_CALLBACK_WRITE_COMPLETE);
-
+	/*
+	i2c_master_register_callback(&i2c_master_instance, i2c_read_complete_callback, I2C_MASTER_CALLBACK_READ_COMPLETE);
+	i2c_master_enable_callback(&i2c_master_instance, I2C_MASTER_CALLBACK_READ_COMPLETE);
+	*/
 } //configure_i2c_callbacks
 
 
@@ -208,6 +210,55 @@ int8_t i2c_Read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *read_buffer, uint8_
 		}
 	}
 
+	
 	return 0;
 
- }// i2c_Read
+ } // i2c_Read
+
+    /**********************************************************************
+ * @fn					- i2c_slRead
+ * @brief				- Read from slave until success, without register
+ *
+ * @param[in]			- i2c_addr: Address of Slave device
+ * @param[in]			- *read_buffer: buffer eg uint8_t buffer[I2C_DATA_LENGTTH] = {0xAA, 0xBB};						
+ * @param[in]			- size: sizeof(buffer)
+ *
+ * @return				- 0
+ *
+ * @note				- called from main
+ **********************************************************************/
+int8_t i2c_slRead(uint8_t i2c_addr, uint8_t *read_buffer, uint8_t len)
+ {
+	//Write to Address, Register
+	read_packet.address = i2c_addr;
+	//read_packet.data = &reg_addr;
+	//read_packet.data = read_buffer;
+	read_packet.data_length = 0;	
+	read_packet.ten_bit_address = FALSE;
+	read_packet.high_speed = FALSE;
+	
+	while (i2c_master_write_packet_wait(&i2c_master_instance, &read_packet) != STATUS_OK) 
+	{
+		/* Increment timeout counter and check if timed out. */
+		if (timeout++ == I2C_TIMEOUT) {
+			return -1;
+			break;
+		}
+	}
+
+	// Read from Address, register
+	read_packet.data = read_buffer;
+	read_packet.data_length = len;
+
+	while (i2c_master_read_packet_wait(&i2c_master_instance, &read_packet) != STATUS_OK)
+	{
+		/* Increment timeout counter and check if timed out. */
+		if (timeout++ == I2C_TIMEOUT) {
+			return -1;
+			break;
+		}
+	}
+
+	return 0;
+
+ }// i2c_slRead

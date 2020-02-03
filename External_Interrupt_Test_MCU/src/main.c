@@ -36,7 +36,7 @@
 #include <main.h>
 
 /* GLOBALS */
-
+bool isNewData;
 
 /******* TEMPERATURE SENSOR TEST ********/
 	uint8_t sensorADDR = 0x18;
@@ -81,6 +81,16 @@ int main (void)
 	system_init();
 	sys_config();	while (1)
 	{
+
+		//state machine to process data?
+	
+
+		//if i2c_Read == i2c_Read, isNewData = false, continue to poll
+		//if i2c_read != i2c Read, isNewData = true, do something with the new data from the motors.
+		//so... i2c read buffer must be copied into a 'do not touch' buffer, then compared.
+
+
+
 	/*
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);
 		delay_ms(100);

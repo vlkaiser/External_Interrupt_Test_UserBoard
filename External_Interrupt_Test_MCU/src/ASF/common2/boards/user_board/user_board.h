@@ -43,8 +43,7 @@ void system_board_init(void);
 /** Name string macro */
 #define BOARD_NAME                "SAMD20_XPLAINED_PRO"
 
-/** \name Resonator definitions
- *  @{ */
+/** \name Resonator definitions *  @{ */
 #define BOARD_FREQ_SLCK_XTAL      (32768U)
 #define BOARD_FREQ_SLCK_BYPASS    (32768U)
 #define BOARD_FREQ_MAINCK_XTAL    0 /* Not Mounted */
@@ -53,15 +52,13 @@ void system_board_init(void);
 #define BOARD_OSC_STARTUP_US      15625
 /** @} */
 
-/** \name LED0 definitions
- *  @{ */
+/** \name LED0 definitions  *  @{ */
 #define LED0_PIN                  PIN_PA14
 #define LED0_ACTIVE               false
 #define LED0_INACTIVE             !LED0_ACTIVE
 /** @} */
 
-/** \name SW0 definitions
- *  @{ */
+/** \name SW0 definitions *  @{ */
 #define SW0_PIN                   PIN_PA15
 #define SW0_ACTIVE                false
 #define SW0_INACTIVE              !SW0_ACTIVE

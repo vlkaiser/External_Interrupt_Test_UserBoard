@@ -15,7 +15,7 @@
  /*
   * Global Variables
   */
-#define MAX_RX_BUFFER_LENGTH	5
+#define MAX_RX_BUFFER_LENGTH	256
 #define I2C_SLAVE_ADDRESS		0x18
 #define I2C_DATA_LENGTH			10
 #define I2C_TIMEOUT				10
@@ -33,8 +33,11 @@ void i2c_write_complete_callback(struct i2c_master_module *const module);
 void configure_i2c_callbacks(void);
 
 int8_t i2c_Write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *write_buffer, uint8_t len);
-int8_t i2c_slWrite(uint8_t i2c_addr, uint8_t *write_buffer, uint8_t len);
 int8_t i2c_Read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *read_buffer, uint8_t len);
+
+int8_t i2c_slWrite(uint8_t i2c_addr, uint8_t *write_buffer, uint8_t len);
+int8_t i2c_slRead(uint8_t i2c_addr, uint8_t *read_buffer, uint8_t len);
+
 
 
 #endif /* SERCOM_H_ */
