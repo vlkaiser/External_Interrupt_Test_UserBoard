@@ -46,6 +46,7 @@ void system_board_init(void);
 #define XPLAINED_PRO	1
 
 #ifdef ROBOT_SCAN
+
 /** \name Resonator definitions *  @{ */
 	#define BOARD_FREQ_SLCK_XTAL      (32768U)
 	#define BOARD_FREQ_SLCK_BYPASS    (32768U)
@@ -55,16 +56,43 @@ void system_board_init(void);
 	#define BOARD_OSC_STARTUP_US      15625
 	/** @} */
 
+	#define LED_MCU_GREEN				PIN_PA19
+	#define LED_MCU_ORANGE				PIN_PA18
+
+	#define LED_PWR_RED_PIN				PIN_PA05
+	#define LED_PWR_GREEN_PIN			PIN_PA06
+	#define LED_MEAS_WHITE_PIN			PIN_PB14
+	#define LED_STOP_RED_PIN			PIN_PB15
+
+/** Number of on-board LEDs */
+	#define LED_COUNT                 4
+
+	#define PB_PWR_PIN					PIN_PB00
+	//#define PB_PWR_EIC_PIN				PIN_PB00A_EIC_EXTINT0
+	//#define PB_PWR_EIC_MUX				MUX_PB00A_EIC_EXTINT0
+	//#define PB_PWR_EIC_PINMUX			PINMUX_PB00A_EIC_EXTINT0
+	//#define PB_PWR_EIC_LINE				00
+
+	#define PB_MEAS_PIN					PIN_PB01
+	//#define PB_MEAS_EIC_PIN				PIN_PB01A_EIC_EXTINT1
+	//#define PB_MEAS_EIC_MUX				MUX_PB01A_EIC_EXTINT1
+	//#define PB_MEAS_EIC_PINMUX			PINMUX_PB01A_EIC_EXTINT1
+	//#define PB_MEAS_EIC_LINE			01
+
+	#define PB_ESTOP_PIN				PIN_PB02
+	#define PB_ESTOP_EIC_PIN			PIN_PB02A_EIC_EXTINT2
+	#define PB_ESTOP_EIC_MUX			MUX_PB02A_EIC_EXTINT2
+	#define PB_ESTOP_EIC_PINMUX			PINMUX_PB02A_EIC_EXTINT2
+	#define PB_ESTOP_EIC_LINE			02
+
 	/** Number of on-board Buttons */
-	//IO Panel Stop, Measure, Power
 	#define BUTTON_COUNT 3
 
 
-	/** Number of on-board LEDs */
+	
 	//IO Panel Stop, Measure, Power
 	//Status LED GN/OR
-	#define LED_COUNT                 4
-	#define LED0 LED0_PIN
+
 
 #endif
 
@@ -119,7 +147,59 @@ void system_board_init(void);
 	/** @} */
 
 
+	#define LED_PWR_RED_PIN				PIN_PA05
+	#define LED_PWR_GREEN_PIN			PIN_PA20
+	#define LED_MEAS_WHITE_PIN			PIN_PA21
+	#define LED_STOP_RED_PIN			PIN_PB15
+
+	#define PB_PWR_PIN					PIN_PB05
+	//#define PB_PWR_EIC_PIN				PIN_PB05A_EIC_EXTINT5
+	//#define PB_PWR_EIC_MUX				MUX_PB05A_EIC_EXTINT5
+	//#define PB_PWR_EIC_PINMUX			PINMUX_PB05A_EIC_EXTINT5
+	//#define PB_PWR_EIC_LINE				05
+
+	#define PB_MEAS_PIN					PIN_PB06
+	//#define PB_MEAS_EIC_PIN				PIN_PB06A_EIC_EXTINT6
+	//#define PB_MEAS_EIC_MUX				MUX_PB06A_EIC_EXTINT6
+	//#define PB_MEAS_EIC_PINMUX			PINMUX_PB06A_EIC_EXTINT6
+	//#define PB_MEAS_EIC_LINE			06
+
+	#define PB_ESTOP_PIN				PIN_PB07
+	#define PB_ESTOP_EIC_PIN			PIN_PB07A_EIC_EXTINT7
+	#define PB_ESTOP_EIC_MUX			MUX_PB07A_EIC_EXTINT7
+	#define PB_ESTOP_EIC_PINMUX			PINMUX_PB07A_EIC_EXTINT7
+	#define PB_ESTOP_EIC_LINE			07
+
 #endif
+
+/* UNIVERSAL */
+
+#define LED_ACTIVE					TRUE
+#define LED_INACTIVE				FALSE
+
+#define PB_ACTIVE					FALSE
+#define PB_INACTIVE					!PB_ACTIVE
+
+/* Interrupt Definitions */
+#define BUTTON_PWR_PIN				PB_PWR_PIN
+#define BUTTON_PWR_EIC_PIN			PB_PWR_EIC_PIN
+#define BUTTON_PWR_EIC_MUX			PB_PWR_EIC_MUX
+#define BUTTON_PWR_EIC_PINMUX		PB_PWR_EIC_PINMUX
+#define BUTTON_PWR_EIC_LINE			PB_PWR_EIC_LINE
+/* @ */
+#define BUTTON_MEAS_PIN				PB_MEAS_PIN
+#define BUTTON_MEAS_EIC_PIN			PB_MEAS_EIC_PIN
+#define BUTTON_MEAS_EIC_MUX			PB_MEAS_EIC_MUX
+#define BUTTON_MEAS_EIC_PINMUX		PB_MEAS_EIC_PINMUX
+#define BUTTON_MEAS_EIC_LINE		PB_MEAS_EIC_LINE
+/* @ */
+#define BUTTON_ESTOP_PIN			PB_ESTOP_PIN
+#define BUTTON_ESTOP_EIC_PIN		PB_ESTOP_EIC_PIN
+#define BUTTON_ESTOP_EIC_MUX		PB_ESTOP_EIC_MUX
+#define BUTTON_ESTOP_EIC_PINMUX		PB_ESTOP_EIC_PINMUX
+#define BUTTON_ESTOP_EIC_LINE		PB_ESTOP_EIC_LINE
+
+
 /**
  * \name LED #0 definitions
  *

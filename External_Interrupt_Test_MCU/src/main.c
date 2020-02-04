@@ -79,17 +79,63 @@ bool isNewData;
 int main (void)
 {
 	system_init();
-	sys_config();	while (1)
+	sys_config();	bool pwrState = FALSE;	while (1)
 	{
+		/* Poll for other button presses - safer than interrupts since the Daughter Card really doesn't do anything else */
 
+		// No Power:
+		if(pwrState == FALSE)
+		{
+			// Only action available is to power up
+			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0)
+			{
+
+				bool button_pin_state = port_pin_get_input_level(BUTTON_PWR_PIN);
+				button_pin_state = !button_pin_state;
+
+				port_pin_set_output_level(LED_PWR_RED_PIN, FALSE);
+				port_pin_set_output_level(LED_PWR_GREEN_PIN, TRUE);
+
+				pwrState = TRUE;
+			}
+		}
+		// Power:
+		else
+		{
+			// Measure:
+			if (port_pin_get_input_level(BUTTON_MEAS_PIN) == 0)
+			{
+				if (pwrState == TRUE)
+				{
+					bool button_pin_state = port_pin_get_input_level(BUTTON_MEAS_PIN);
+					button_pin_state = !button_pin_state;
+
+					port_pin_set_output_level(LED_MEAS_WHITE_PIN, TRUE);
+
+					delay_ms(500);
+					port_pin_set_output_level(LED_MEAS_WHITE_PIN, FALSE);
+				}
+			}
+
+			// Power Off:
+			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0)
+			{
+
+				bool button_pin_state = port_pin_get_input_level(BUTTON_PWR_PIN);
+				button_pin_state = !button_pin_state;
+
+				port_pin_set_output_level(LED_PWR_RED_PIN, TRUE);
+				port_pin_set_output_level(LED_PWR_GREEN_PIN, FALSE);
+
+				pwrState = FALSE;
+			}
+
+
+
+		}
+
+		//delay_ms(10);
 		//state machine to process data?
-	
-
-		//if i2c_Read == i2c_Read, isNewData = false, continue to poll
-		//if i2c_read != i2c Read, isNewData = true, do something with the new data from the motors.
-		//so... i2c read buffer must be copied into a 'do not touch' buffer, then compared.
-
-
 
 	/*
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);

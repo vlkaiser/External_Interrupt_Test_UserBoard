@@ -20,8 +20,8 @@
  *
  * @param[in]			- N/A
  * @return				- void
- *
- * @note				- Initialization
+ * 
+ * @note				- Initialization - see main.h for details
  **********************************************************************/
   void configure_i2c_master(void)
   {
@@ -31,11 +31,11 @@
 	  /* Change buffer timeout to something longer. */
 	  config_i2c_master.buffer_timeout = 10000;
 
-	  /* Initialize and enable device with config. */
+	  /* Initialize and enable device with config. See Main.h for details*/
 	  // SERCOM0 PAD[0] PA08 - SDA
 	  // SERCOM0 PAD[1] PA09 - SCL
-	  config_i2c_master.pinmux_pad0    = PINMUX_PA08D_SERCOM2_PAD0;
-	  config_i2c_master.pinmux_pad1    = PINMUX_PA09D_SERCOM2_PAD1;
+	  config_i2c_master.pinmux_pad0    = PINMUX_PA08D_SERCOM2_PAD0;	//ALT:SERCOM
+	  config_i2c_master.pinmux_pad1    = PINMUX_PA09D_SERCOM2_PAD1;	//ALT:SERCOM
 	  
 	  i2c_master_init(&i2c_master_instance, SERCOM2, &config_i2c_master);
 	  i2c_master_enable(&i2c_master_instance);
@@ -123,50 +123,6 @@ int8_t i2c_Write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *write_buffer, uint
 	return 0;
  } //i2c_Write
 
-
-/**********************************************************************
- * @fn					- i2c_slWrite
- * @brief				- Write buffer to slave until success, without register.
- *
- * @param[in]			- i2c_addr: Address of Slave device
- * @param[in]			- *read_buffer: buffer eg uint8_t buffer[I2C_DATA_LENGTTH] = {0xAA, 0xBB};
- * @param[in]			- size: sizeof(buffer)
- *
- * @return				- 0
- *
- * @note				- called from main
- **********************************************************************/
-int8_t i2c_slWrite(uint8_t i2c_addr, uint8_t *write_buffer, uint8_t len)
- {
-
-	// Merge Device Register and data to TX
- 	//uint8_t merged_packet[len];
-	uint8_t merged_packet[len + 1];
- 	//merged_packet[0] = reg_addr;
- 	
- 	for(uint16_t i = 0; i < len; i++)
- 	//merged_packet[i + 1] = write_buffer[i];
-	merged_packet[i] = write_buffer[i];
-
-	write_packet.address = i2c_addr;
-	write_packet.data = merged_packet;
-	//write_packet.data_length = len + 1;
-	write_packet.data_length = len;
-	read_packet.ten_bit_address = FALSE;
-	read_packet.high_speed = FALSE;
-
-	while (i2c_master_write_packet_wait(&i2c_master_instance, &write_packet) != STATUS_OK) 
-	{
-		/* Increment timeout counter and check if timed out. */
-		if (timeout++ == I2C_TIMEOUT) {
-		return -1;
-			break;
-		}
-	}
-
-	return 0;
- } //i2c_Write
-
    /**********************************************************************
  * @fn					- i2c_Read
  * @brief				- Read from slave until success.
@@ -210,13 +166,51 @@ int8_t i2c_Read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *read_buffer, uint8_
 		}
 	}
 
-	
 	return 0;
 
  } // i2c_Read
 
+/**********************************************************************
+ * @fn					- i2c_slWriteA
+ * @brief				- Write buffer to slave until success, without register.
+ *
+ * @param[in]			- i2c_addr: Address of Slave device
+ * @param[in]			- *read_buffer: buffer eg uint8_t buffer[I2C_DATA_LENGTTH] = {0xAA, 0xBB};
+ * @param[in]			- size: sizeof(buffer)
+ *
+ * @return				- 0
+ *
+ * @note				- I2C A 
+ **********************************************************************/
+int8_t i2c_slWriteA(uint8_t i2c_addr, uint8_t *write_buffer, uint8_t len)
+ {
+
+	// Merge Device Register and data to TX
+	uint8_t merged_packet[len + 1];
+ 	
+ 	for(uint16_t i = 0; i < len; i++)
+	merged_packet[i] = write_buffer[i];
+
+	write_packet.address = i2c_addr;
+	write_packet.data = merged_packet;
+	write_packet.data_length = len;
+	read_packet.ten_bit_address = FALSE;
+	read_packet.high_speed = FALSE;
+
+	while (i2c_master_write_packet_wait(&i2c_master_instance, &write_packet) != STATUS_OK) 
+	{
+		/* Increment timeout counter and check if timed out. */
+		if (timeout++ == I2C_TIMEOUT) {
+		return -1;
+			break;
+		}
+	}
+
+	return 0;
+ } //i2c_Write
+
     /**********************************************************************
- * @fn					- i2c_slRead
+ * @fn					- i2c_slReadA
  * @brief				- Read from slave until success, without register
  *
  * @param[in]			- i2c_addr: Address of Slave device
@@ -225,14 +219,11 @@ int8_t i2c_Read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *read_buffer, uint8_
  *
  * @return				- 0
  *
- * @note				- called from main
+ * @note				-I2C A
  **********************************************************************/
-int8_t i2c_slRead(uint8_t i2c_addr, uint8_t *read_buffer, uint8_t len)
+int8_t i2c_slReadA(uint8_t i2c_addr, uint8_t *read_buffer, uint8_t len)
  {
-	//Write to Address, Register
 	read_packet.address = i2c_addr;
-	//read_packet.data = &reg_addr;
-	//read_packet.data = read_buffer;
 	read_packet.data_length = 0;	
 	read_packet.ten_bit_address = FALSE;
 	read_packet.high_speed = FALSE;
