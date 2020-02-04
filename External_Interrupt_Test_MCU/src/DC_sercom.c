@@ -9,7 +9,7 @@
  */ 
  
  #include "DC_sercom.h"
- 
+                         
  /* Timeout counter. */
  uint16_t timeout = 0;
 
