@@ -73,6 +73,7 @@ void extint_detection_callback(void)
 	//i2c_Read(slaveADDR, slcfgReg, slrd_buffer, DATA_LENGTH);		//i2c_write_request_callback
 	//i2c_Read(I2C_SLAVE_ADDRESS, slcfgReg, (uint8_t *)&rx_cmds, sizeof(rx_cmds));		//i2c_write_request_callback
 	//i2c_slRead(slaveADDR, slrd_buffer, DATA_LENGTH);				//i2c_write_request_callback
+
 	i2c_slRead(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));				//i2c_write_request_callback
 			
  }
@@ -107,7 +108,7 @@ void sys_config(void)
 
 	configure_i2c_master();
 
-		wr_cmds.cmdID = 0xA5;
-		wr_cmds.encLocMoveTo = 0xAABBCCDD;		// little endian
+		wr_cmds.cmdID = 0xFF;
+		wr_cmds.encLocMoveTo = 0xA1A2A3A4;		// little endian
 
 }

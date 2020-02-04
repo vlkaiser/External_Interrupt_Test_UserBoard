@@ -140,8 +140,8 @@ int8_t i2c_slWrite(uint8_t i2c_addr, uint8_t *write_buffer, uint8_t len)
  {
 
 	// Merge Device Register and data to TX
- 	uint8_t merged_packet[len];
-	//uint8_t merged_packet[len + 1];
+ 	//uint8_t merged_packet[len];
+	uint8_t merged_packet[len + 1];
  	//merged_packet[0] = reg_addr;
  	
  	for(uint16_t i = 0; i < len; i++)

@@ -17,6 +17,8 @@
 #include "stdio.h"
 #include "string.h"
 
+#pragma pack(1)		//define 1 byte boundaries instead of 4 byte
+
 void sensorRead(uint8_t* rd_buf);
 
 
