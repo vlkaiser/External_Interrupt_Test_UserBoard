@@ -93,8 +93,11 @@ void extint_detection_callback(void)
 	port_pin_set_output_level(LED_0_PIN, button_pin_state);
 	
 	i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
+	wr_cmds.cmdID = 0xAA;
 	i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));				//i2c_write_request_callback
-			
+	
+	i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
+	wr_cmds.cmdID = 0xFF;		
  }
  #endif
 
