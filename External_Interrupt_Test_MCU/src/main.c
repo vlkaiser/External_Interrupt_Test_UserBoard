@@ -61,10 +61,16 @@ bool isNewData;
 	 //uint8_t sensorADDR = 0x18;
 	 uint8_t mfgIDReg = 0x06;
 
-	 i2c_Read(sensorADDR, mfgIDReg, rd_buf, 2);	//expected 0x0054
+	 i2c_Read(sensorADDR, mfgIDReg, rd_buf, 2);		//expected 0x0054
 
  }
 
+ void clear_wrCMDS(void)
+ {
+	wr_cmds.cmdID = 0;
+	wr_cmds.encLocMoveTo = 0;
+
+ }
 
 /******************************************************************************************************
  * @fn					- main
@@ -79,15 +85,19 @@ bool isNewData;
 int main (void)
 {
 	system_init();
-	sys_config();	int debounce = 100;	bool pwrState = FALSE;	while (1)
+	sys_config();	int debounce = 100;	__vo bool lastPwrState = TRUE;	bool pwrState = FALSE;	while (1)
 	{
 		/* Poll for other button presses - safer than interrupts since the Daughter Card really doesn't do anything else */
 
-		// No Power:
-		if(pwrState == FALSE)
+		/* Check if the Power button was pressed-and-held */
+		lastPwrState = port_pin_get_input_level(BUTTON_PWR_PIN);	//FALSE = still pressed, TRUE = released
+		delay_ms(debounce);
+
+		// Power not previously On:
+		if(pwrState == FALSE )
 		{
-			// Only action available is to power up
-			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0)
+			// Only action available is to power up, and also the button was previously released:
+			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0 && lastPwrState == TRUE)
 			{
 				bool button_pin_state = port_pin_get_input_level(BUTTON_PWR_PIN);
 				button_pin_state = !button_pin_state;
@@ -95,14 +105,21 @@ int main (void)
 				port_pin_set_output_level(LED_PWR_RED_PIN, FALSE);
 				port_pin_set_output_level(LED_PWR_GREEN_PIN, TRUE);
 
+				wr_cmds.cmdID = PWR_UP;
+				wr_cmds.encLocMoveTo = posHome;
+				i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
+
 				pwrState = TRUE;
 				delay_ms(debounce);
+				
+				lastPwrState = port_pin_get_input_level(BUTTON_PWR_PIN);	//TRUE = still pressed, FALSE = released
+				clear_wrCMDS();
 			}
 		}
-		// Power:
-		else
+		// Power is on:
+		else if (pwrState == TRUE)
 		{
-			// Measure:
+			// if Power is ON, and Measure is Pressed:
 			if (port_pin_get_input_level(BUTTON_MEAS_PIN) == 0)
 			{
 				
@@ -113,15 +130,19 @@ int main (void)
 
 					port_pin_set_output_level(LED_MEAS_WHITE_PIN, TRUE);
 
-					delay_ms(500);
+					wr_cmds.cmdID = PWR_DWN;
+					wr_cmds.encLocMoveTo = posStart;
+					i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
+
 					port_pin_set_output_level(LED_MEAS_WHITE_PIN, FALSE);
 					
 					delay_ms(debounce);
+					clear_wrCMDS();
 				}
-			}
+			} //end MEAS check
 
-			// Power Off:
-			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0)
+			// Power Off - if button was pressed AND button was previously released
+			if (port_pin_get_input_level(BUTTON_PWR_PIN) == 0 && lastPwrState == TRUE)
 			{
 
 				bool button_pin_state = port_pin_get_input_level(BUTTON_PWR_PIN);
@@ -130,17 +151,39 @@ int main (void)
 				port_pin_set_output_level(LED_PWR_RED_PIN, TRUE);
 				port_pin_set_output_level(LED_PWR_GREEN_PIN, FALSE);
 
+				//To Do: Send Go Home on Shutdown
+				wr_cmds.cmdID = PWR_DWN;
+				wr_cmds.encLocMoveTo = posEnd;
+				i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
+				
 				pwrState = FALSE;
 
 				delay_ms(debounce);
+
+				lastPwrState = port_pin_get_input_level(BUTTON_PWR_PIN);	//FALSE = still pressed, TRUE = released
+				clear_wrCMDS();
+			} //end PWR Check
+
+
+			/*
+			if(someGPIOPinFromSlave == TRUE)
+			{ 
+				i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));				//i2c_write_request_callback
+				//process rx_cmds
+				state(rx_cmds.cmds)
+				{
+					case cmd:
+						//do something
+						break;
+
+					default:
+						break;
+				}//end state
 			}
 
-
-
+			*/
 		}
 
-		//delay_ms(10);
-		//state machine to process data?
 
 	/*
 		i2c_Write(sensorADDR, cfgReg, wr_buffer, 1);

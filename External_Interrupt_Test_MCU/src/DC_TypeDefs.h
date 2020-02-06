@@ -27,6 +27,52 @@
 #define	SET			ENABLE
 #define RESET		DISABLE
 
+/***** Command ID Abstractions *****/
+
+// Commands Sent: cmdID
+#define PWR_UP		0xAA
+#define PWR_DWN		0x66
+#define MEAS_ST		0x10
+#define ESTP		0xFF
+
+// Commands Sent: encLocMoveTo //
+#define posHome		0xACCE55ED
+#define posEnd		0x0B501E7E
+#define posStart	0xFEEDFEED
+#define posSTOP		0xDECEA5ED
+
+
+
+//Commands Received:
+
+// encoderLoc
+// voltage5V
+// current5V
+// peakCurrent5V
+// voltage24V
+// current24V
+// peakCurrent24V
+// voltage400V
+// current400V
+// peakCurrent400V
+// pcbTemp
+// lastCmdRxd
+// lastCmdStatus
+
+// ID
+#define		motorX		0xA1
+#define		motorY		0xB1
+#define		motorZ		0xC1
+
+// config
+
+// status
+#define	motorRDY	0x01
+#define	motorBSY	0x00
+
+// motorStatus
+
+/**************************************/
 
 
 #endif /* TYPEDEFS_H_ */

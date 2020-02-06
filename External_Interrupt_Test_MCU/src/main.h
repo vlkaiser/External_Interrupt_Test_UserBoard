@@ -70,6 +70,6 @@
 #pragma pack(1)		//define 1 byte boundaries instead of 4 byte
 
 void sensorRead(uint8_t* rd_buf);
-
+void clear_wrCMDS(void);
 
 #endif /* MAIN_H_ */
