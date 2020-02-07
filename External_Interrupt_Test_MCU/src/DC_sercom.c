@@ -56,22 +56,24 @@
 {
 	/* Initiate new packet read */
 	i2c_master_read_packet_job(&i2c_master_instance, &read_packet);
+	/*
 	delay_ms(100);
 	port_pin_set_output_level(LED0, HIGH);
 	delay_ms(500);
 	port_pin_set_output_level(LED0, LOW);
-
+*/
 } // i2c_write_complete_callback
 
  void i2c_read_complete_callback(struct i2c_master_module *const module)
 {
 	/* Initiate new packet read */
 	i2c_master_write_packet_job(&i2c_master_instance, &write_packet);
+	/*
 	delay_ms(100);
 	port_pin_set_output_level(LED0, HIGH);
 	delay_ms(500);
 	port_pin_set_output_level(LED0, LOW);
-
+	*/
 } // i2c_read_complete_callback
 
  /**********************************************************************

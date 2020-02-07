@@ -114,6 +114,11 @@ int main (void)
 				
 				lastPwrState = port_pin_get_input_level(BUTTON_PWR_PIN);	//TRUE = still pressed, FALSE = released
 				clear_wrCMDS();
+
+				do{
+					i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));
+					delay_ms(500);
+				}while(rx_cmds.status != dRDY);
 			}
 		}
 		// Power is on:
@@ -130,7 +135,7 @@ int main (void)
 
 					port_pin_set_output_level(LED_MEAS_WHITE_PIN, TRUE);
 
-					wr_cmds.cmdID = PWR_DWN;
+					wr_cmds.cmdID = MEAS_ST;
 					wr_cmds.encLocMoveTo = posStart;
 					i2c_slWriteA(I2C_SLAVE_ADDRESS, (uint8_t *)&wr_cmds, sizeof(wr_cmds));				//i2c_read_request_callback
 
@@ -138,6 +143,12 @@ int main (void)
 					
 					delay_ms(debounce);
 					clear_wrCMDS();
+
+				do{
+					i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));
+					delay_ms(500);
+				}while(rx_cmds.status != dRDY);
+
 				}
 			} //end MEAS check
 
@@ -162,6 +173,11 @@ int main (void)
 
 				lastPwrState = port_pin_get_input_level(BUTTON_PWR_PIN);	//FALSE = still pressed, TRUE = released
 				clear_wrCMDS();
+
+				do{
+					i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));
+					delay_ms(500);
+				}while(rx_cmds.status != dRDY);
 			} //end PWR Check
 
 

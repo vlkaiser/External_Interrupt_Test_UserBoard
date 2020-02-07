@@ -42,8 +42,8 @@ void system_board_init(void);
 
 /** Name string macro */
 #define BOARD_NAME                "SAMD20_XPLAINED_PRO"
-//#define ROBOT_SCAN	1
-#define XPLAINED_PRO	1
+#define ROBOT_SCAN	1
+//#define XPLAINED_PRO	1
 
 #ifdef ROBOT_SCAN
 
@@ -170,7 +170,21 @@ void system_board_init(void);
 	#define PB_ESTOP_EIC_PINMUX			PINMUX_PB07A_EIC_EXTINT7
 	#define PB_ESTOP_EIC_LINE			07
 
-#endif
+	/**
+	 * \name LED #0 definitions
+	 *
+	 * Wrapper macros for LED0, to ensure common naming across all Xplained Pro
+	 * boards.
+	 *
+	 *  @{ */
+	#define LED_0_NAME                "LED0 (yellow)"
+	#define LED_0_PIN                 LED0_PIN
+	#define LED_0_ACTIVE              LED0_ACTIVE
+	#define LED_0_INACTIVE            LED0_INACTIVE
+	#define LED0_GPIO 				  LED0_PIN
+	/** @} */
+
+#endif //XPLAINED PRO
 
 /* UNIVERSAL */
 
@@ -200,19 +214,7 @@ void system_board_init(void);
 #define BUTTON_ESTOP_EIC_LINE		PB_ESTOP_EIC_LINE
 
 
-/**
- * \name LED #0 definitions
- *
- * Wrapper macros for LED0, to ensure common naming across all Xplained Pro
- * boards.
- *
- *  @{ */
-#define LED_0_NAME                "LED0 (yellow)"
-#define LED_0_PIN                 LED0_PIN
-#define LED_0_ACTIVE              LED0_ACTIVE
-#define LED_0_INACTIVE            LED0_INACTIVE
-#define LED0_GPIO 				  LED0_PIN
-/** @} */
+
 
 
 

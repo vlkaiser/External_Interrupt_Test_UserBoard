@@ -23,6 +23,7 @@
  *
  * @note				- 
  ******************************************************************************************************/
+#ifdef XPLAINED_PRO
 void configure_extint_channel(void)
 {
 	struct extint_chan_conf config_extint_chan;
@@ -34,7 +35,7 @@ void configure_extint_channel(void)
 	config_extint_chan.detection_criteria = EXTINT_DETECT_RISING;
 	
 	extint_chan_set_config(BUTTON_0_EIC_LINE, &config_extint_chan);
-}
+}#endif
 /**********************************************************************
  * @fn					- configure_extint_EStop 
  * @brief				- Config EStop PB on NM IO Panel as interrupt
@@ -133,6 +134,11 @@ void extint_detection_callback_estop(void)
 		i--;
 	}
 	clear_wrCMDS();
+
+	do{
+	i2c_slReadA(I2C_SLAVE_ADDRESS, (uint8_t *)&rx_cmds, sizeof(rx_cmds));
+	delay_ms(500);
+	}while(rx_cmds.status != dRDY);
 }
 
 
@@ -238,7 +244,10 @@ void sys_config(void)
 {
 	config_IO_Panel();
 
- 	configure_extint_channel(); 	configure_extint_callbacks();
+	#ifdef  XPLAINED_PRO
+		configure_extint_channel();
+	#endif
+ 	 	configure_extint_callbacks();
  	
 	//configure_extint_PWR();	//configure_extint_Measure();	configure_extint_EStop();
 	

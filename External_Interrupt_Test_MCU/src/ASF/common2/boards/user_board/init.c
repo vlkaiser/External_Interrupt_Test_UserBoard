@@ -30,6 +30,7 @@ void board_init(void);
  *
  * @note				- 
  ******************************************************************************************************/
+ #ifdef XPLAINED_PRO
  void config_led(void)
  {
 	 struct port_config pin_conf;
@@ -39,6 +40,7 @@ void board_init(void);
 	 port_pin_set_config(LED_0_PIN, &pin_conf);
 	 port_pin_set_output_level(LED_0_PIN, LED_0_INACTIVE);
  }
+ #endif
 
 
   /******************************************************************************************************
@@ -49,6 +51,7 @@ void board_init(void);
  *
  * @note				- 
  ******************************************************************************************************/
+ #ifdef XPLAINED_PRO
  void config_btn(void)
  {
 	 struct port_config pin_conf;
@@ -59,6 +62,7 @@ void board_init(void);
 	pin_conf.input_pull = PORT_PIN_PULL_UP;
 	port_pin_set_config(BUTTON_0_PIN, &pin_conf);
  }
+ #endif
 
 void system_board_init(void)
 {
@@ -66,7 +70,9 @@ void system_board_init(void)
  	SysTick_Config(system_gclk_gen_get_hz(GCLK_GENERATOR_0));
  	delay_init();
 
-	config_led();
-	config_btn();
+	#ifdef XPLAINED_PRO
+		config_led();
+		config_btn();
+	#endif
 
 }

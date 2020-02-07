@@ -41,7 +41,16 @@
 #define posStart	0xFEEDFEED
 #define posSTOP		0xDECEA5ED
 
+/********** Command Response **********/
+//cmd Status
+#define dWAIT		0xBE
+#define dRDY		0x60
 
+//cmd encoderloc
+#define endPwrUp	0x1D1D1700
+#define endPwrDown	0x11223344
+#define endMeas		0x88AA88EE
+#define endESTOP	0xDEADDEAD
 
 //Commands Received:
 

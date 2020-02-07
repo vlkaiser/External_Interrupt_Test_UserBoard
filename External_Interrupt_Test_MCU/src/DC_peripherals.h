@@ -19,7 +19,10 @@ void config_IO_Panel(void);
 
 void configure_extint_EStop(void);
 
-void configure_extint_channel(void);
+#ifdef XPLAINED_PRO
+	void configure_extint_channel(void);
+#endif
+
 void configure_extint_callbacks(void);
 void extint_detection_callback(void);
 
